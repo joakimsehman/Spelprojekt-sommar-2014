@@ -1,5 +1,8 @@
 package Main;
 
+import gameStates.GameState;
+import gameStates.MenuState;
+
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -7,7 +10,9 @@ import java.awt.GraphicsEnvironment;
 import com.jme3.app.SimpleApplication;
 
 public class Game extends SimpleApplication{
-
+	
+	private GameState gameState;
+	private MenuState menuState;
 	
 	
 	public Game(){
@@ -15,7 +20,9 @@ public class Game extends SimpleApplication{
 	}
 	
 	public void simpleInitApp() {
-
+		gameState = new GameState();
+		getStateManager().attach(gameState);
+		setDisplayStatView(true);
 		
 	}
 

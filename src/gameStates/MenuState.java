@@ -23,6 +23,8 @@ public class MenuState extends AbstractAppState{
 		super.setEnabled(enabled);
 		if(enabled){
 			//init stuff that is in use while this state is RUNNING
+		}else{
+			//take away everything not needed while this state is paused
 		}
 	}
 	

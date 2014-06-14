@@ -25,7 +25,9 @@ public class GameState extends AbstractAppState{
 
 	private SimpleApplication app;
 	private Spatial sceneModel;
-	private Vector3f camVector;
+	private boolean up, down, right, left;
+	private Vector3f camLocation;
+	private float camSpeed;
 	
 	public void initialize(AppStateManager stateManager, Application game){
 		super.initialize(stateManager, game);
@@ -33,15 +35,23 @@ public class GameState extends AbstractAppState{
 		
 		
 		//Now init stuff that is independent of wether state is PAUSED or RUNNING
-		app.getFlyByCamera().setMoveSpeed(100);
-		app.getCamera().setLocation(new Vector3f(0,60,0));
-		app.getCamera().lookAtDirection(new Vector3f(0,-1f,0), new Vector3f(0,1f,0));
+		camLocation = new Vector3f(0,60,0);
+		camSpeed = 10.0f;
+		//app.getFlyByCamera().setMoveSpeed(100);
+		app.getCamera().lookAtDirection(new Vector3f(0,-1,0), new Vector3f(0,1,0));
+		app.getCamera().setLocation(camLocation);
+		
+		
+		app.getInputManager().setCursorVisible(false);
 		
 		createTerrain();
 		setUpLight();
 		initKeys();
 		
-		camVector = new Vector3f(0,0,0);
+		up = false;
+		down = false;
+		right = false;
+		left = false;
 	}
 	
 	public void setEnabled(boolean enabled){
@@ -59,7 +69,21 @@ public class GameState extends AbstractAppState{
 	}
 	
 	public void update(float tpf){
-		 //System.out.println(app.getCamera().getDirection());
+		 System.out.println(app.getCamera().getDirection());
+		
+		if(up){
+			camLocation.z = camLocation.getZ() + camSpeed*tpf;
+		}
+		if(down){
+			camLocation.z = camLocation.getZ() - camSpeed*tpf;
+		}
+		if(left){
+			camLocation.x = camLocation.getX() + camSpeed*tpf;
+		}
+		if(right){
+			camLocation.x = camLocation.getX() - camSpeed*tpf;
+		}
+		app.getCamera().setLocation(camLocation);
 	}
 	
 	
@@ -81,29 +105,29 @@ public class GameState extends AbstractAppState{
 	}
 	
 	private void initKeys(){
-		app.getInputManager().addMapping("Up", new KeyTrigger(KeyInput.KEY_UP));
-		app.getInputManager().addMapping("Down", new KeyTrigger(KeyInput.KEY_DOWN));
-		app.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT));
-		app.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
+		app.getInputManager().addMapping("Up", new KeyTrigger(KeyInput.KEY_W));
+		app.getInputManager().addMapping("Down", new KeyTrigger(KeyInput.KEY_S));
+		app.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
+		app.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
 		
-		app.getInputManager().addListener(analogListener, "Up", "Down", "Left", "Right");
+		app.getInputManager().addListener(actionListener, "Up", "Down", "Left", "Right");
 	}
 	
 	
-	private AnalogListener analogListener = new AnalogListener(){
+	private ActionListener actionListener = new ActionListener(){
 
-		public void onAnalog(String name, float value, float tpf) {
+		public void onAction(String name, boolean isPressed, float tpf) {
 			if(name.equals("Up")){
-				
+				up = isPressed;
 			}
 			if(name.equals("Down")){
-				
+				down = isPressed;
 			}
 			if(name.equals("Left")){
-				
+				left = isPressed;
 			}
 			if(name.equals("Right")){
-				
+				right = isPressed;
 			}
 			
 		}

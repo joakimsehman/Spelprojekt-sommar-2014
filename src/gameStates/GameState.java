@@ -12,6 +12,7 @@ import com.jme3.app.state.AbstractAppState;
 import com.jme3.app.state.AppStateManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
@@ -24,6 +25,7 @@ public class GameState extends AbstractAppState{
 
 	private SimpleApplication app;
 	private Spatial sceneModel;
+	private Vector3f camVector;
 	
 	public void initialize(AppStateManager stateManager, Application game){
 		super.initialize(stateManager, game);
@@ -32,8 +34,14 @@ public class GameState extends AbstractAppState{
 		
 		//Now init stuff that is independent of wether state is PAUSED or RUNNING
 		app.getFlyByCamera().setMoveSpeed(100);
+		app.getCamera().setLocation(new Vector3f(0,60,0));
+		app.getCamera().lookAtDirection(new Vector3f(0,-1f,0), new Vector3f(0,1f,0));
+		
 		createTerrain();
 		setUpLight();
+		initKeys();
+		
+		camVector = new Vector3f(0,0,0);
 	}
 	
 	public void setEnabled(boolean enabled){
@@ -51,7 +59,7 @@ public class GameState extends AbstractAppState{
 	}
 	
 	public void update(float tpf){
-		//do the following while the game is RUNNING
+		 //System.out.println(app.getCamera().getDirection());
 	}
 	
 	
@@ -71,6 +79,36 @@ public class GameState extends AbstractAppState{
 		dl.setDirection(new Vector3f(2.8f, -2.8f, -2.8f).normalizeLocal());
 		app.getRootNode().addLight(dl);
 	}
+	
+	private void initKeys(){
+		app.getInputManager().addMapping("Up", new KeyTrigger(KeyInput.KEY_UP));
+		app.getInputManager().addMapping("Down", new KeyTrigger(KeyInput.KEY_DOWN));
+		app.getInputManager().addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT));
+		app.getInputManager().addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
+		
+		app.getInputManager().addListener(analogListener, "Up", "Down", "Left", "Right");
+	}
+	
+	
+	private AnalogListener analogListener = new AnalogListener(){
+
+		public void onAnalog(String name, float value, float tpf) {
+			if(name.equals("Up")){
+				
+			}
+			if(name.equals("Down")){
+				
+			}
+			if(name.equals("Left")){
+				
+			}
+			if(name.equals("Right")){
+				
+			}
+			
+		}
+		
+	};
 	
 	
 }

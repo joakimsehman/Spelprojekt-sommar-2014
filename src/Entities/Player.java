@@ -9,6 +9,7 @@ public class Player extends Character{
 			Spatial spatial) {
 		super(location, scale, rotation, spatial);
 		// TODO Auto-generated constructor stub
+		//kom igen nu
 	}
 
 }

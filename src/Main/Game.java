@@ -32,7 +32,7 @@ public class Game extends SimpleApplication{
 		GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		DisplayMode[] modes = device.getDisplayModes();
 		int i = 0;
-		settings.setResolution(1920, 1080);
+		settings.setResolution(modes[i].getWidth(), modes[i].getHeight());
 		settings.setFrequency(modes[i].getRefreshRate());
 		settings.setBitsPerPixel(modes[i].getBitDepth());
 		settings.setFullscreen(device.isFullScreenSupported());

@@ -38,8 +38,11 @@ public class GameState extends AbstractAppState{
 		camLocation = new Vector3f(0,60,0);
 		camSpeed = 10.0f;
 		//app.getFlyByCamera().setMoveSpeed(100);
-		app.getCamera().lookAtDirection(new Vector3f(0,-1,0), new Vector3f(0,1,0));
+		app.getFlyByCamera().setEnabled(false);
+		app.getCamera().lookAtDirection(new Vector3f(0,-1,0), new Vector3f(0,60,0));
 		app.getCamera().setLocation(camLocation);
+		//app.getFlyByCamera().setDragToRotate(true);
+		
 		
 		
 		app.getInputManager().setCursorVisible(false);

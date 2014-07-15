@@ -12,7 +12,7 @@ public abstract class Entity {
 		this.location = new Vector3f(location);
 		spatial.scale(scale.getX(), scale.getY(), scale.getZ());
 		spatial.rotate(rotation.getX(), rotation.getY(), rotation.getZ());
-		//spatial.setLocalTranslation(location);
+		spatial.setLocalTranslation(location);
 		
 		this.spatial = spatial;
 	}
